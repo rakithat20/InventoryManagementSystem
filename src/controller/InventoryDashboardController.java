@@ -35,8 +35,17 @@ public class InventoryDashboardController {
         dashboardView.addViewSuppliersListener(new ViewSuppliersListener());
         dashboardView.addLogoutListener(new LogoutListener());
         dashboardView.addSearchListener(new SearchListener());
-    }
 
+
+        upadteCards();
+
+    }
+    private void upadteCards(){
+        dashboardView.updateTotalItems(inventoryDAO.getAllItems().size());
+        dashboardView.updateLowStock(inventoryDAO.getLowStockCount());
+        dashboardView.updateSuppliers(supplierDAO.getAllSuppliers().size());
+
+    }
     private void loadInventoryItems() {
         List<InventoryItem> items = inventoryDAO.getAllItems();
         Object[][] tableData = new Object[items.size()][6];
@@ -54,6 +63,7 @@ public class InventoryDashboardController {
         }
 
         dashboardView.updateTableData(tableData);
+
     }
 
     class AddItemListener implements ActionListener {
@@ -159,8 +169,6 @@ public class InventoryDashboardController {
     class ViewSuppliersListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            dashboardView.showMessage("View Suppliers clicked — implement SupplierFormView here.");
-            // You can open SupplierFormView here, e.g.:
             SupplierFormView view = new SupplierFormView();
             new SupplierViewController(view);
         }

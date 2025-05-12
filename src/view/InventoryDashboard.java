@@ -17,6 +17,11 @@ public class InventoryDashboard extends JFrame {
     private final Color buttonTextColor = Color.WHITE;
 
     private JPanel dashboardCards;
+    private JLabel totalItemsValue;
+    private JLabel lowStockValue;
+    private JLabel categoriesValue;
+    private JLabel suppliersValue;
+
 
     public InventoryDashboard() {
         setTitle("📦 Inventory Dashboard");
@@ -54,10 +59,19 @@ public class InventoryDashboard extends JFrame {
         dashboardCards.setBorder(new EmptyBorder(15, 15, 15, 15));
         dashboardCards.setBackground(lightGray);
 
-        dashboardCards.add(createDashboardCard("📦 Total Items", "218"));
-        dashboardCards.add(createDashboardCard("⚠️ Low Stock", "12"));
-        dashboardCards.add(createDashboardCard("📂 Categories", "8"));
-        dashboardCards.add(createDashboardCard("🤝 Suppliers", "125"));
+        totalItemsValue = new JLabel("0");
+        lowStockValue = new JLabel("0");
+        suppliersValue = new JLabel("0");
+
+        dashboardCards.add(createDashboardCard("📦 Total Items", totalItemsValue));
+        dashboardCards.add(createDashboardCard("⚠️ Low Stock", lowStockValue));
+        dashboardCards.add(createDashboardCard("🤝 Suppliers", suppliersValue));
+
+
+//        dashboardCards.add(createDashboardCard("📦 Total Items", "218"));
+//        dashboardCards.add(createDashboardCard("⚠️ Low Stock", "12"));
+//        dashboardCards.add(createDashboardCard("📂 Categories", "8"));
+//        dashboardCards.add(createDashboardCard("🤝 Suppliers", "125"));
 
         // Center Table
         JPanel centerPanel = new JPanel(new BorderLayout());
@@ -130,7 +144,7 @@ public class InventoryDashboard extends JFrame {
     }
 
     // ✅ Corrected createDashboardCard method (removed recursion)
-    private JPanel createDashboardCard(String title, String value) {
+    private JPanel createDashboardCard(String title, JLabel valueLabel) {
         JPanel card = new JPanel();
         card.setPreferredSize(new Dimension(100, 100));
         card.setLayout(new BorderLayout());
@@ -144,7 +158,6 @@ public class InventoryDashboard extends JFrame {
         titleLabel.setFont(new Font("Segoe UI Emoji", Font.BOLD, 14));
         titleLabel.setForeground(new Color(100, 100, 100));
 
-        JLabel valueLabel = new JLabel(value);
         valueLabel.setFont(new Font("Segoe UI Emoji", Font.BOLD, 26));
         valueLabel.setForeground(primaryColor);
 
@@ -153,6 +166,7 @@ public class InventoryDashboard extends JFrame {
 
         return card;
     }
+
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
@@ -220,4 +234,20 @@ public class InventoryDashboard extends JFrame {
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
+    public void updateTotalItems(int count) {
+        totalItemsValue.setText(String.valueOf(count));
+    }
+
+    public void updateLowStock(int count) {
+        lowStockValue.setText(String.valueOf(count));
+    }
+
+    public void updateCategories(int count) {
+        categoriesValue.setText(String.valueOf(count));
+    }
+
+    public void updateSuppliers(int count) {
+        suppliersValue.setText(String.valueOf(count));
+    }
+
 }

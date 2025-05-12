@@ -73,10 +73,40 @@ public class SupplierDAO {
     }
 
     public boolean updateSupplier(Supplier supplier) {
-        return  true;
+
+
+        String sql = "UPDATE suppliers SET name = ?, contact_number = ?, email = ?, address = ? WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, supplier.getName());
+            stmt.setString(2, supplier.getContactNumber());
+            stmt.setString(3, supplier.getEmail());
+            stmt.setString(4, supplier.getAddress());
+            stmt.setInt(5, supplier.getId());
+
+
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     public boolean deleteSupplier(int id) {
-        return true;
+        String sql = "DELETE FROM suppliers WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

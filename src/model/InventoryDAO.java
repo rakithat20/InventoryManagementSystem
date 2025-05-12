@@ -92,6 +92,7 @@ public class InventoryDAO {
 
         return false;
     }
+
     public InventoryItem getItemById(int id) {
         String sql = "SELECT * FROM inventory_items WHERE id = ?";
         InventoryItem inventoryItem = null;
@@ -120,6 +121,24 @@ public class InventoryDAO {
         return inventoryItem; // ✅ Return the found item or null
     }
 
+    public int getLowStockCount() {
+        String sql = "SELECT COUNT(*) FROM inventory_items WHERE quantity < 60;";
+        int count = 0;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                count = rs.getInt(1); // Get the count from the first column
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
 
 
 }
